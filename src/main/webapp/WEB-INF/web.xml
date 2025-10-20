@@ -15,4 +15,8 @@
         <param-value>D:\Programming\Java\FPT-Internship\ApacheFTP\apache-ftpserver-1.2.1\res\home</param-value>
     </context-param>
 
+    <welcome-file-list>
+        <welcome-file>jsp/index.jsp</welcome-file>
+    </welcome-file-list>
+
 </web-app>

@@ -38,7 +38,8 @@ public class RenameServlet extends HttpServlet {
         // Tạo path mới.
         // Paths.get(currentPath, newName).toString() sẽ xử lý dấu /
         // replace("\\", "/") để đảm bảo chuẩn FTP (dùng /)
-        String newPath = Paths.get(currentPath, newName).toString().replace("\\", "/");
+//        String newPath = Paths.get(currentPath, newName).toString().replace("\\", "/");
+        String newPath = currentPath.equals("/") ? "/" + newName : currentPath + "/" + newName;
 
         try {
             FTPClientWrapper.renameFile(account, oldPath, newPath);
