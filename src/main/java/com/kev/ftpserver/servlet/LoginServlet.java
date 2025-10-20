@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 
         } else {
             request.setAttribute("login-error", "Sai tài khoản hoặc mật khẩu FTP!");
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
         }
     }
 

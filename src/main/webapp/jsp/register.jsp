@@ -4,7 +4,7 @@
     <title>Register Page</title>
 </head>
 <body>
-<form action="register" method="post"> <%-- Đổi action --%>
+<form action="${pageContext.request.contextPath}/register" method="post"> <%-- Đổi action --%>
     <label for="username">Username: </label>
     <input type="text" id="username" name="username" required autofocus><br><br>
     <label for="password">Password: </label>

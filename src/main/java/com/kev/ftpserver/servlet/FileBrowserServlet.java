@@ -51,11 +51,11 @@ public class FileBrowserServlet extends HttpServlet {
                 // Nếu có lỗi (ví dụ: sai user/pass trong session), đá về trang login
                 session.invalidate(); // Xóa session hỏng
                 request.setAttribute("login-error", "Phiên hết hạn hoặc lỗi kết nối: " + e.getMessage());
-                request.getRequestDispatcher("/index.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/index.jsp").forward(request, response);
             }
         } else {
             // Không có session, về trang login
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("jsp/index.jsp");
         }
     }
 }
