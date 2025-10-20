@@ -87,6 +87,15 @@
                         (Sửa nội dung)
                     </a>
                 </c:if>
+                    <%-- 3.Link "Xóa" --%>
+                <a href="#"
+                   style="font-size: 0.9em; margin-left: 10px; color: red;"
+                   onclick="deleteItem(
+                           '<c:out value='${item.path}'/>',
+                           '<c:out value='${item.name}'/>',
+                           '<c:out value='${currentPath}'/>'
+                           )">
+                </a>
             </td>
         </tr>
     </c:forEach>
@@ -122,6 +131,15 @@
             document.getElementById('renameForm').submit();
         } else if (newName === "") {
             alert("Tên mới không được để trống!");
+        }
+    }
+    function deleteItem(path, name, currentPath) {
+        // Hiện hộp thoại xác nhận
+        if (confirm("Bạn có chắc chắn muốn xóa: " + name + "?\n(Lưu ý: Thư mục phải rỗng mới xóa được!)")) {
+            // Gọi DeleteServlet
+            window.location.href = "${pageContext.request.contextPath}/delete?path="
+                + encodeURIComponent(path)
+                + "&currentPath=" + encodeURIComponent(currentPath);
         }
     }
 </script>

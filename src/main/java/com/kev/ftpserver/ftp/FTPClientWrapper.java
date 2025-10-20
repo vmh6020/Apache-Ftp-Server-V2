@@ -117,4 +117,26 @@ public class FTPClientWrapper {
             if (ftp.isConnected()) ftp.disconnect();
         }
     }
+    public static boolean deleteFileOrDirectory(FTPAccount account, String path) throws IOException {
+        FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
+        boolean deleted = false;
+        try {
+            // Thử xóa file trước
+            if (ftp.deleteFile(path)) {
+                deleted = true;
+            } else {
+                // Nếu không phải file, thử xóa thư mục (chỉ hoạt động nếu thư mục rỗng)
+                deleted = ftp.removeDirectory(path);
+            }
+            ftp.logout();
+        } finally {
+            if (ftp.isConnected()) ftp.disconnect();
+        }
+
+        if (!deleted) {
+            // Ném lỗi nếu không thể xóa (ví dụ: thư mục không rỗng)
+            throw new IOException("Không thể xóa file hoặc thư mục (thư mục có thể không rỗng).");
+        }
+        return deleted;
+    }
 }
