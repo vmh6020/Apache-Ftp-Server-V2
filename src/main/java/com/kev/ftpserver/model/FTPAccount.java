@@ -2,10 +2,10 @@ package com.kev.ftpserver.model;
 
 import java.io.Serializable;
 
-// Dùng để đóng gói thông tin user, lưu vào session
+// lưu vào session
 public class FTPAccount implements Serializable {
     private String username;
-    private String password; // Lưu password clear-text, chỉ dùng trong session
+    private String password; // clear text, dùng trong session
     private String server;
     private int port;
 

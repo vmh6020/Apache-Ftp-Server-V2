@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*" %>
 <%@ page import="com.kev.ftpserver.model.FileItem" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -7,11 +6,35 @@
 <html>
 <head>
     <title>FTP File Browser</title>
+    <style>
+        .file-table {
+            width: 70%;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+        }
+
+        .file-table th,
+        .file-table td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .file-table th {
+            background-color: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
 <h2>✅ Đăng nhập FTP thành công!</h2>
 <h3>Thư mục hiện tại: <c:out value="${currentPath}"/></h3>
-<p><a href="logout">(Đăng xuất)</a></p> <%-- HOÀN THIỆN: Thêm link Logout --%>
+
+<c:if test="${currentPath != '/'}">
+    <p style="font-size: 1.1em; font-weight: bold;">
+        <a href="files?path=<c:out value='${parentPath}'/>">&laquo; Back</a>
+    </p>
+</c:if>
+
+<p><a href="logout">(Đăng xuất)</a></p>
 
 <%-- Hiển thị lỗi (nếu có) từ session --%>
 <% if (session.getAttribute("file-error") != null) { %>
@@ -22,8 +45,8 @@
 <% } %>
 
 <h3>📁 Danh sách file:</h3>
-<table border="1" style="width: 70%; border-collapse: collapse;" cellpadding="5">
-    <tr style="background-color: #f0f0f0;">
+<table class="file-table">
+    <tr>
         <th>Loại</th>
         <th>Tên file</th>
         <th>Kích thước (bytes)</th>
@@ -95,6 +118,7 @@
                            '<c:out value='${item.name}'/>',
                            '<c:out value='${currentPath}'/>'
                            )">
+                    (Xóa)
                 </a>
             </td>
         </tr>

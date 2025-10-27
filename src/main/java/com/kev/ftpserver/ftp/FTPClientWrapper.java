@@ -15,25 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-// Đây là FtpConnector.java của bạn, được đổi tên và nâng cấp
 public class FTPClientWrapper {
-    public static boolean renameFile(FTPAccount account, String fromPath, String toPath) throws IOException {
-        FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
-        boolean success = false;
-        try {
-            // Lệnh rename của FTP client
-            success = ftp.rename(fromPath, toPath);
-            if (!success) {
-                // Ném lỗi nếu server từ chối
-                throw new IOException("Không thể đổi tên: " + ftp.getReplyString());
-            }
-            ftp.logout();
-        } finally {
-            if (ftp.isConnected()) ftp.disconnect();
-        }
-        return success;
-    }
-    // Hàm connect tiện ích, giữ nguyên logic
     private static FTPClient connect(String server, int port, String user, String pass) throws IOException {
         FTPClient ftp = new FTPClient();
         ftp.connect(server, port);
@@ -71,6 +53,20 @@ public class FTPClientWrapper {
             if (ftp.isConnected()) ftp.disconnect();
         }
         return items;
+    }
+
+    public static void renameFile(FTPAccount account, String fromPath, String toPath) throws IOException {
+        FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
+        boolean success = false;
+        try {
+            success = ftp.rename(fromPath, toPath);
+            if (!success) {
+                throw new IOException("Không thể đổi tên: " + ftp.getReplyString());
+            }
+            ftp.logout();
+        } finally {
+            if (ftp.isConnected()) ftp.disconnect();
+        }
     }
 
     public static void downloadFile(String server, int port, String user, String pass,
@@ -117,7 +113,7 @@ public class FTPClientWrapper {
             if (ftp.isConnected()) ftp.disconnect();
         }
     }
-    public static boolean deleteFileOrDirectory(FTPAccount account, String path) throws IOException {
+    public static void deleteFileOrDirectory(FTPAccount account, String path) throws IOException {
         FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
         boolean deleted = false;
         try {
@@ -134,9 +130,7 @@ public class FTPClientWrapper {
         }
 
         if (!deleted) {
-            // Ném lỗi nếu không thể xóa (ví dụ: thư mục không rỗng)
             throw new IOException("Không thể xóa file hoặc thư mục (thư mục có thể không rỗng).");
         }
-        return deleted;
     }
 }

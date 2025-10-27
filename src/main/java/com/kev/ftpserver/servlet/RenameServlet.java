@@ -10,13 +10,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.nio.file.Paths; // Dùng Paths để ghép đường dẫn
 
 @WebServlet("/rename")
 public class RenameServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         FTPAccount account = (session != null) ? (FTPAccount) session.getAttribute("account") : null;
 
@@ -43,11 +42,9 @@ public class RenameServlet extends HttpServlet {
 
         try {
             FTPClientWrapper.renameFile(account, oldPath, newPath);
-            // Thành công, quay lại thư mục cha (không báo gì cả)
             response.sendRedirect("files?path=" + currentPath);
 
         } catch (IOException e) {
-            // Thất bại, quay lại và báo lỗi
             session.setAttribute("file-error", "Lỗi đổi tên: " + e.getMessage());
             response.sendRedirect("files?path=" + currentPath);
         }

@@ -13,7 +13,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false); // Lấy session (nếu có)
 
         if (session != null) {
@@ -21,6 +21,6 @@ public class LogoutServlet extends HttpServlet {
         }
 
         // Quay về trang đăng nhập
-        response.sendRedirect("jsp/index.jsp");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 }

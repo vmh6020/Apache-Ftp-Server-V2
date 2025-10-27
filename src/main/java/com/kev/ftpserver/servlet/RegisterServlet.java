@@ -23,7 +23,7 @@
     @WebServlet("/register")
     public class RegisterServlet extends HttpServlet {
         private DataSource dataSource;
-        private String homeDirectory; // Đã đổi tên biến cho nhất quán
+        private String homeDirectory;
 
         @Override
         public void init(ServletConfig config) throws ServletException {
@@ -54,15 +54,14 @@
             String homedirectory = Paths.get(homeDirectory, username).toString();
 
             boolean enabled = true;
-            boolean writepermission = true; // *** SỬA LỖI LOGIC: Nên set là 'true' để user có quyền ghi mặc định ***
+            boolean writepermission = true;
 
             if (isUsernameTaken(username)) {
                 request.setAttribute("register-error", "Tên người dùng '" + username + "' đã tồn tại!");
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/register.jsp").forward(request, response);
                 return;
             }
 
-            // *** SỬA LỖI LOGIC: Dùng tên cột chuẩn (userid, enableflag, ...) ***
             String sql = "INSERT INTO ftp_users (userid, userpassword, homedirectory, enableflag, writepermission, idletime, uploadrate, downloadrate, maxloginnumber, maxloginperip) VALUES (?, ?, ?, ?, ?, 0, 0, 0, 0, 0)";
 
             try (Connection conn = dataSource.getConnection();
@@ -86,16 +85,15 @@
 
                 HttpSession session = request.getSession();
                 session.setAttribute("register-success", "Đăng kí thành công ✅! Bạn có thể login 🧑‍💻!");
-                response.sendRedirect("/jsp/index.jsp"); // Chuyển về trang index gốc
+                response.sendRedirect(request.getContextPath() + "/jsp/index.jsp");
             } catch (SQLException e) {
-                e.printStackTrace();
+                getServletContext().log("Lỗi SQL khi đăng ký user: " + username, e);
                 request.setAttribute("register-error", "Lỗi hệ thống, không thể đăng ký!");
-                request.getRequestDispatcher("/register.jsp").forward(request, response);
+                request.getRequestDispatcher("/jsp/register.jsp").forward(request, response);
             }
         }
 
         private boolean isUsernameTaken(String username) {
-            // *** SỬA LỖI LOGIC: Dùng tên cột chuẩn 'userid' ***
             String sql = "SELECT userid FROM ftp_users WHERE userid = ?";
             try (Connection conn = dataSource.getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql)) {

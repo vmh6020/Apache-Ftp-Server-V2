@@ -44,7 +44,6 @@ public class UploadServlet extends HttpServlet {
         try (InputStream input = filePart.getInputStream()) {
             FTPClientWrapper.uploadFile(account, remoteFile, input);
         } catch (IOException e) {
-            // Xử lý lỗi đẹp hơn
             request.setAttribute("upload-error", "Upload thất bại: " + e.getMessage());
             // Gọi lại FileBrowserServlet để hiển thị lỗi
             request.getRequestDispatcher("/files").forward(request, response);

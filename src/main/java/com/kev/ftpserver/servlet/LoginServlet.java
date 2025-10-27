@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
-    // Chỉ xử lý POST (đăng nhập)
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String username = request.getParameter("username");
@@ -74,7 +73,7 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
             return false;
         }
 
