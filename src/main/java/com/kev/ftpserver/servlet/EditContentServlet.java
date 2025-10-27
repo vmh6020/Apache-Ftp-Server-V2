@@ -59,7 +59,7 @@ public class EditContentServlet extends HttpServlet {
 
     // LƯU NỘI DUNG MỚI: Nhận text và upload (ghi đè)
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(false);
         FTPAccount account = (session != null) ? (FTPAccount) session.getAttribute("account") : null;
 
@@ -71,7 +71,7 @@ public class EditContentServlet extends HttpServlet {
         // Lấy nội dung text mới từ <textarea>
         String newContent = request.getParameter("fileContent");
         String filePath = request.getParameter("filePath");
-        String parentPath = request.getParameter("parentPath"); // Thư mục cha
+        String parentPath = request.getParameter("parentPath");
 
         if (filePath == null || newContent == null || parentPath == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Thiếu dữ liệu (path hoặc content).");
@@ -82,7 +82,7 @@ public class EditContentServlet extends HttpServlet {
             // 1. Chuyển String nội dung mới thành InputStream
             InputStream inputStream = new ByteArrayInputStream(newContent.getBytes(StandardCharsets.UTF_8));
 
-            // 2. Gọi hàm upload (nó sẽ tự động ghi đè file cũ)
+            // 2. Ghi đè file cũ
             FTPClientWrapper.uploadFile(account, filePath, inputStream);
 
             // 3. Quay về trang danh sách file (tại thư mục cha)

@@ -96,7 +96,6 @@ public class FTPClientWrapper {
     public static String downloadFileAsString(FTPAccount account, String remoteFile) throws IOException {
         FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
 
-        // Dùng ByteArrayOutputStream để hứng dữ liệu từ file
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 
             boolean success = ftp.retrieveFile(remoteFile, outputStream);
