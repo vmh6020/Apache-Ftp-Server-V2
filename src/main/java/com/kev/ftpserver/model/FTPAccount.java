@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 // lưu vào session
 public class FTPAccount implements Serializable {
-    private String username;
-    private String password; // clear text, dùng trong session
-    private String server;
-    private int port;
+    private final String username;
+    private final String password; // clear text, dùng trong session
+    private final String server;
+    private final int port;
 
     public FTPAccount(String username, String password, String server, int port) {
         this.username = username;

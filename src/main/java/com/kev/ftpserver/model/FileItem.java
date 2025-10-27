@@ -1,10 +1,10 @@
 package com.kev.ftpserver.model;
 
 public class FileItem {
-    private String name;
-    private long size;
-    private boolean isDirectory;
-    private String path; // Thêm path tạo link download
+    private final String name;
+    private final long size;
+    private final boolean isDirectory;
+    private final String path; // Thêm path tạo link download
 
     public FileItem(String name, long size, boolean isDirectory, String path) {
         this.name = name;

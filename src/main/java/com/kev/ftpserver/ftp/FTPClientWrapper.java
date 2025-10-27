@@ -57,7 +57,7 @@ public class FTPClientWrapper {
 
     public static void renameFile(FTPAccount account, String fromPath, String toPath) throws IOException {
         FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
-        boolean success = false;
+        boolean success;
         try {
             success = ftp.rename(fromPath, toPath);
             if (!success) {
@@ -115,7 +115,7 @@ public class FTPClientWrapper {
     }
     public static void deleteFileOrDirectory(FTPAccount account, String path) throws IOException {
         FTPClient ftp = connect(account.getServer(), account.getPort(), account.getUsername(), account.getPassword());
-        boolean deleted = false;
+        boolean deleted;
         try {
             // Thử xóa file trước
             if (ftp.deleteFile(path)) {
