@@ -2,7 +2,6 @@ package com.kev.ftpserver.servlet;
 
 import com.kev.ftpserver.ftp.FTPClientWrapper;
 import com.kev.ftpserver.model.FTPAccount;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

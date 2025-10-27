@@ -102,7 +102,7 @@
                     return rs.next();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                getServletContext().log("Lỗi SQL khi kiểm tra username: " + username, e);
                 return true;
             }
         }
